@@ -7,24 +7,23 @@
 // You should be able to check items on the list
 // You should be able to delete items from the list
 
-//item name rendered as inner text
-//item's index in the store set as a data attribute for the <li>
-//item's checked state (true or false) rendered as the presence or absence of a  CSS class for indicating checked items
-//join together the individual item strings into one long string
-//insert the <li>s string inside the .js-shopping-list <ul> into the DOM
+// You should be able to press a switch/checkbox to toggle between displaying all items or displaying only items that are unchecked
+// You should be able to type in a search term and the displayed list will be filtered by item names only containing that search term
+// You should be able to edit the title of an item
 
 // render STORE shopping list
 
 const STORE = {
-  items:[
-    { name: 'apples', checked: false },
-    { name: 'oranges', checked: false },
-    { name: 'milk', checked: true },
-    { name: 'bread', checked: false }
-  ],
-  filter: false,
-  searchFilter: '',
-} 
+    items:[
+      { name: 'apples', checked: false },
+      { name: 'oranges', checked: false },
+      { name: 'milk', checked: true },
+      { name: 'bread', checked: false }
+    ],
+    filter: false,
+  } 
+    
+  
 
 //------------------------------------------------------------------------
 // Creating HTML, Looping through shopping list, render new shopping list HTML
@@ -56,8 +55,7 @@ function generateShoppingItemsString(shoppingList) {
 function renderShoppingList() {
   //renders or shows the shopping list in the DOM
   //for each item in STORE, generate a string representing an <li> with:
-  const displayedItems = STORE.filter ? STORE.items.filter(item => item.checked): STORE.searchFilter !== "" ? STORE.items.filter(item => item.name === STORE.searchFilter): STORE.items;
-  const shoppingListItemsString = generateShoppingItemsString(displayedItems);
+  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
@@ -111,50 +109,34 @@ function handleItemCheckClicked() {
 
 //-----------------------------------------------------------------------
 // Delete items on list
-function deleteItemOffShoppingList (item) {
+function deleteItemOffShoppingList(item) {
   STORE.items.splice(item, 1);
 }
 
 function handleDeleteItemClicked() {
   console.log('`handleDeleteItemClicked` ran');
-  $(".js-shopping-list").on("click", ".js-item-delete", function(event) {
+  $('.js-shopping-list').on('click', '.js-item-delete', function(event) {
     const itemIndex = getItemIndexFromElement(event.currentTarget);
-    
+
     deleteItemOffShoppingList(itemIndex);
     renderShoppingList();
   });
 }
 
 //-----------------------------------------------------------------------
+//Toggle displaying items - checked vs unchecked
+
+function handleToggleCheckUncheckedItems() {}
+
 //-----------------------------------------------------------------------
+//Search displays list with filtered item names containing the search term
 
+function handleSearch() {}
 
-function handleToggleAllCheckedOrAllItems () {
-  let checkBox = $('input[type="checkbox"]');
+//-----------------------------------------------------------------------
+//Edit title of an item
 
-    checkBox.change(function(event) {
-      STORE.filter = $(this).prop('checked');
-    renderShoppingList();
-  });
-}
-
-function filterBySearch(value) {
-  
-}
-  
-function handleSearchBarEntry() {
-  $(".searchBarDiv").submit(function(event){
-      event.preventDefault();
-      const value = $(".js-SearchBar").val();
-      STORE.searchFilter = value;
-      $(".js-SearchBar").val("");
-      
-  });
-
-  renderShoppingList();
-}
-
-
+function handleEditTitle() {}
 
 //-----------------------------------------------------------------------
 // DOM
@@ -163,8 +145,7 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
-  handleToggleAllCheckedOrAllItems();
-  handleSearchBarEntry();
+  handleToggleCheckUncheckedItems();
 }
 
 $(handleShoppingList);
