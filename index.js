@@ -56,9 +56,20 @@ function generateShoppingItemsString(shoppingList) {
 function renderShoppingList() {
   //renders or shows the shopping list in the DOM
   //for each item in STORE, generate a string representing an <li> with:
-  const displayedItems = STORE.filter ? STORE.items.filter(item => item.checked): STORE.searchFilter !== "" ? STORE.items.filter(item => item.name === STORE.searchFilter): STORE.items;
-  const shoppingListItemsString = generateShoppingItemsString(displayedItems);
+  function displayedItems () {  
+    if(STORE.filter === true) {
+        return STORE.items.filter(item => item.checked); 
+    } else if (STORE.searchFilter !== "") {
+        return STORE.items.filter(item => item.name === STORE.searchFilter); 
+    } else {
+        return STORE.items;
+    }
+  }
+  // const displayedItems = STORE.filter ? STORE.items.filter(item => item.checked): STORE.searchFilter !== "" ? STORE.items.filter(item => item.name === STORE.searchFilter): STORE.items;
+  const shoppingListItemsString = generateShoppingItemsString(displayedItems());
   $('.js-shopping-list').html(shoppingListItemsString);
+
+ 
 }
 
 //--------------------------------------------------------------------
@@ -138,9 +149,7 @@ function handleToggleAllCheckedOrAllItems () {
   });
 }
 
-function filterBySearch(value) {
-  
-}
+
   
 function handleSearchBarEntry() {
   $(".searchBarDiv").submit(function(event){
@@ -148,10 +157,9 @@ function handleSearchBarEntry() {
       const value = $(".js-SearchBar").val();
       STORE.searchFilter = value;
       $(".js-SearchBar").val("");
-      
+      renderShoppingList();
   });
-
-  renderShoppingList();
+  
 }
 
 
