@@ -42,7 +42,10 @@ function generateItemElement(item, itemIndex, template) {
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
-        </div>
+          <button class="js-Edit-Button">
+            <span>Edit</span>
+         </button>
+         </div>
       </li>`;
 }
 
@@ -166,9 +169,36 @@ function changesItemName () {
 
 }
 
-function handleUserInputToChangeItemName() {
+function rendersEditForm () {
+  let dog =
+    `<form>
+      <label for="changedNameValue" >Change Name Here</label>
+      <input class="js-Changed-Name-Text" type="text" placeholder="Change Name here" name="changedNameValue">
+      <button class="js-Form-Button-For-EditName" type="submit">SubmitButton</button
+     </form>`;
+   return dog;
+}
+
+function handleRendersEditForm() {
+  $(".js-Edit-Button").on("click", function(event) {
+    $(".editItem").html(rendersEditForm());
+  });
+}
+
+function editItemName() {
   
 }
+
+function handleEditValue () {
+  $(".js-Form-Button-For-EditName").submit(function(event) {
+    
+    event.preventDefault();
+    console.log("hello")
+    let newName = $(this).val();
+    editItemName(newName);
+  });
+ }
+
 
 //-----------------------------------------------------------------------
 // DOM
@@ -179,7 +209,7 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleToggleAllCheckedOrAllItems();
   handleSearchBarEntry();
-  handleUserInputToChangeItemName();
+  handleRendersEditForm();
   changesItemName();
 }
 
