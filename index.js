@@ -56,29 +56,21 @@ function generateShoppingItemsString(shoppingList) {
 function renderShoppingList() {
   //renders or shows the shopping list in the DOM
   //for each item in STORE, generate a string representing an <li> with:
-  // function displayedItems () {  
-  //   if(STORE.filter === true) {
-  //       return STORE.items.filter(item => item.checked); 
-  //   } else if (STORE.searchFilter !== "") {
-  //       return STORE.items.filter(item => item.name === STORE.searchFilter); 
-  //   } else {
-  //       return STORE.items;
-  //   }  
-  // the reason i do not want to do this is because else if statements lock me out of accessing the other conditionals, //in the case of displaying items i want to display based on wheter ANY conditional statement is met.
-    function displayedItems () {
-      let items = STORE.items;
-        if (STORE.filter) {
-          items = items.filter(item => item.checked); 
-        if (STORE.searchFilter !== "") {
-          items = items.filter(item => item.name === STORE.searchFilter); 
-        } 
-        return items;
-      }
-    }  //doing it this way does not lock me out of my other options
+  function displayedItems () {  
+    if(STORE.filter === true) {
+        return STORE.items.filter(item => item.checked); 
+    } else if (STORE.searchFilter !== "") {
+        return STORE.items.filter(item => item.name === STORE.searchFilter); 
+    } else {
+        return STORE.items;
+    }
+  }
   // const displayedItems = STORE.filter ? STORE.items.filter(item => item.checked): STORE.searchFilter !== "" ? STORE.items.filter(item => item.name === STORE.searchFilter): STORE.items;
   const shoppingListItemsString = generateShoppingItemsString(displayedItems());
   $('.js-shopping-list').html(shoppingListItemsString);
-  }
+
+ 
+}
 
 //--------------------------------------------------------------------
 // Add items to list
@@ -170,7 +162,13 @@ function handleSearchBarEntry() {
   
 }
 
+function changesItemName () {
 
+}
+
+function handleUserInputToChangeItemName() {
+  
+}
 
 //-----------------------------------------------------------------------
 // DOM
@@ -181,6 +179,8 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleToggleAllCheckedOrAllItems();
   handleSearchBarEntry();
+  handleUserInputToChangeItemName();
+  changesItemName();
 }
 
 $(handleShoppingList);
