@@ -45,7 +45,13 @@ function generateItemElement(item, itemIndex, template) {
           <button class="js-Edit-Button">
             <span>Edit</span>
          </button>
+         <div class="edit-Name-Of-Item-Div">
+         <form class="js-Edit-Form">
+           <input class="js-Changed-Name-Text" type="text" placeholder="Change Name here" name="changedNameValue">
+           <button class="js-Form-Button-For-EditName" type="submit">SubmitValueButton</button>
+          </form>
          </div>
+         
       </li>`;
 }
 
@@ -169,33 +175,38 @@ function changesItemName () {
 
 }
 
-function rendersEditForm () {
-  let dog =
-    `<form>
-      <label for="changedNameValue" >Change Name Here</label>
-      <input class="js-Changed-Name-Text" type="text" placeholder="Change Name here" name="changedNameValue">
-      <button class="js-Form-Button-For-EditName" type="submit">SubmitButton</button
-     </form>`;
-   return dog;
-}
+// function rendersEditForm () {
+//   let dog =
+//     `<form class="js-Edit-Form">
+//       <input class="js-Changed-Name-Text" type="text" placeholder="Change Name here" name="changedNameValue">
+//       <button class="js-Form-Button-For-EditName" type="submit">SubmitButton</button
+//      </form>`;
+//    return dog;
+// }
 
-function handleRendersEditForm() {
-  $(".js-Edit-Button").on("click", function(event) {
-    $(".editItem").html(rendersEditForm());
-  });
-}
+// function updateEditValue(newName) {
+//   $(".js-Edit-Button").on("click", function(event) {
+//     $(this).closest(".shopping-item-controls").find(".edit-Name-Of-Item-Div").html(rendersEditForm());
+    
+//   });
+// }
 
-function editItemName() {
-  
-}
+
 
 function handleEditValue () {
-  $(".js-Form-Button-For-EditName").submit(function(event) {
+  $(".js-Edit-Form").submit(function(event) {
     
     event.preventDefault();
-    console.log("hello")
-    let newName = $(this).val();
-    editItemName(newName);
+    let newName = $(this).find("input").val();
+
+    let originalName = $(this).closest("li").find(".js-shopping-item").text();
+    let itemIndex = $(this).index();
+    console.log(itemIndex);
+    console.log(STORE.items[itemIndex].name);
+    STORE.items[itemIndex].name = newName;
+    $(this).find("input").val("");
+
+    renderShoppingList();
   });
  }
 
@@ -209,7 +220,8 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleToggleAllCheckedOrAllItems();
   handleSearchBarEntry();
-  handleRendersEditForm();
+  // handleRendersEditForm();
+  handleEditValue();
   changesItemName();
 }
 
