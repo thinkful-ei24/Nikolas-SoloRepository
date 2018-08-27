@@ -48,7 +48,7 @@ function generateItemElement(item, itemIndex, template) {
          <div class="edit-Name-Of-Item-Div">
          <form class="js-Edit-Form">
            <input class="js-Changed-Name-Text" type="text" placeholder="Change Name here" name="changedNameValue">
-           <button class="js-Form-Button-For-EditName" type="submit">SubmitValueButton</button>
+           <button class="js-Form-Button-For-EditName" >SubmitValueButton</button>
           </form>
          </div>
          
@@ -66,7 +66,7 @@ function renderShoppingList() {
   //renders or shows the shopping list in the DOM
   //for each item in STORE, generate a string representing an <li> with:
   function displayedItems () {  
-    if(STORE.filter === true) {
+    if(STORE.filter) {
         return STORE.items.filter(item => item.checked); 
     } else if (STORE.searchFilter !== "") {
         return STORE.items.filter(item => item.name === STORE.searchFilter); 
@@ -193,8 +193,8 @@ function changesItemName () {
 
 
 
-function handleEditValue () {
-  $(".js-Edit-Form").submit(function(event) {
+function handleEditSubmissionValue () {
+  $(".js-shopping-list").on("submit", ".js-Edit-Form", function(event) {
     
     event.preventDefault();
     let newName = $(this).find("input").val();
@@ -205,6 +205,9 @@ function handleEditValue () {
     console.log(STORE.items[itemIndex].name);
     STORE.items[itemIndex].name = newName;
     $(this).find("input").val("");
+    setTimeout(function() {
+      console.log(STORE.items);
+    },3000);
 
     renderShoppingList();
   });
@@ -221,7 +224,7 @@ function handleShoppingList() {
   handleToggleAllCheckedOrAllItems();
   handleSearchBarEntry();
   // handleRendersEditForm();
-  handleEditValue();
+  handleEditSubmissionValue();
   changesItemName();
 }
 
